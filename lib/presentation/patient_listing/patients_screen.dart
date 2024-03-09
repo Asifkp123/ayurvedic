@@ -22,6 +22,30 @@ class PatientsListingScreen extends StatelessWidget {
       ],
 
     ),
+    floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    floatingActionButton:                         Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+        height: 60,
+        width: width,
+        // padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        decoration: BoxDecoration(
+          color: maingreen,
+          borderRadius: BorderRadius.circular(9),
+        ),
+        child: TextButton(
+          onPressed: () async {},
+          style: TextButton.styleFrom(
+            foregroundColor: cWhite,
+          ),
+          child: Text(
+            'Register Now',
+            style: LoginStyleWhite,
+          ),
+        ),
+      ),
+    )
+      ,
     body:         Column(
       children: [
         Row(
@@ -31,7 +55,7 @@ class PatientsListingScreen extends StatelessWidget {
             SizedBox(
               width: width/1.5,
               height: 50,
-              child: Consumer<UserProvider>(
+              child: Consumer<RegistrationProvider>(
                   builder: (context,provider,child) {
                     return Container(
                       decoration: BoxDecoration(
@@ -153,40 +177,59 @@ class PatientsListingScreen extends StatelessWidget {
             color: mainColor,
             borderRadius: BorderRadius.circular(10)
           ),
-          child:  Column(
-            children: [
-              Row(
-                children: [
-                  Text("1 . ",style: TextStyle( fontSize: 18,fontFamily: "Poppins",fontWeight: FontWeight.w500),),
-                  Text("Vikram Singh ",style: TextStyle( fontSize: 18,fontFamily: "Poppins",fontWeight: FontWeight.w500),),
-                ],
-              ),
-              Text("Couple Combo Package (Rejuven... ",style: TextStyle( fontSize: 18,fontFamily: "Poppins",fontWeight: FontWeight.w500,color: maingreen),),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Row(children: [ Icon(Icons.calendar_month,color: Colors.red,),
-                    Text("31/01/2024  ",style: TextStyle( fontSize: 18,fontFamily: "Poppins",fontWeight: FontWeight.w500,color: Colors.grey),),
+          child:  Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Row(
+                  children: [
+                    Text("1 . ",style: TextStyle( fontSize: 18,fontFamily: "Poppins",fontWeight: FontWeight.w500),),
+                    Text("Vikram Singh ",style: TextStyle( fontSize: 18,fontFamily: "Poppins",fontWeight: FontWeight.w500),),
+                  ],
+                ),
+                const SizedBox(height: 10,),
+                const Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text("Couple Combo Package (Rejuven... ",style: TextStyle( fontSize: 18,fontFamily: "Poppins",fontWeight: FontWeight.w500,color: maingreen),),
+                ),
+                const SizedBox(height: 10,),
 
-                  ]),
-                  Row(children:[ Icon(Icons.person_rounded,color: Colors.red,),
-                    Text("Jithesh  ",style: TextStyle( fontSize: 18,fontFamily: "Poppins",fontWeight: FontWeight.w500,color: Colors.grey),),
-                  ]),
+                const Row(
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(width: 17,),
+                    Row(children: [ Icon(Icons.calendar_month,color: Colors.red,),
+                      Text("31/01/2024  ",style: TextStyle( fontSize: 18,fontFamily: "Poppins",fontWeight: FontWeight.w500,color: Colors.grey),),
+
+                    ]),
+                    Row(children:[ Icon(Icons.person_rounded,color: Colors.red,),
+                      Text("Jithesh  ",style: TextStyle( fontSize: 18,fontFamily: "Poppins",fontWeight: FontWeight.w500,color: Colors.grey),),
+                    ]),
+                    SizedBox(height: 10,),
 
 
 
-                ],
-              ),
-               Divider(color: Colors.grey.shade400,height: 10,thickness: 2,),
-              Row(
-                children: [
-                  Text("View Booking details",style: textformHeadStyle,),
-                  Icon(Icons.arrow_forward_ios_outlined,color: maingreen,)
-                ],
-              )
+
+                  ],
+                ),
+                const SizedBox(height: 10,),
+
+                Divider(color: Colors.grey.shade400,height: 10,thickness: 2,),
+                const SizedBox(height: 10,),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // SizedBox(),
+                    Text("View Booking details",style: textformHeadStyle,),
+                    const Icon(Icons.arrow_forward_ios_outlined,color: maingreen,)
+                  ],
+                )
 
 
-            ],
+              ],
+            ),
           ),
         )
       ],
