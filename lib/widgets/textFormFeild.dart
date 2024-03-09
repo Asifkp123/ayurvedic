@@ -22,26 +22,35 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return  TextFormField(
-      keyboardType: type,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return error;
-        }
-        return null;
-      },
-      controller: inputController,
-      decoration: InputDecoration(
-        hintText: label,
+    return  Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey.shade200),
+        // color: Colors.black,
+    borderRadius: BorderRadius.circular(10),),
+      child: TextFormField(
+        keyboardType: type,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return error;
+          }
+          return null;
+        },
+        controller: inputController,
+        decoration: InputDecoration(
+          hintText: label,
+            hintStyle:TextStyle(color: Colors.grey),
 
 
-          border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(9),
-          borderSide: BorderSide.none,
+            border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(9),
+
+            borderSide: BorderSide.none,
+
+          ),
+          fillColor: mainColor,
+          filled: true,
+
         ),
-        fillColor: mainColor,
-        filled: true,
-
       ),
     );
   }

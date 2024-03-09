@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:testayurvedicproject/constants/colors.dart';
+import 'package:testayurvedicproject/presentation/login/login_provider.dart';
 import 'package:testayurvedicproject/widgets/textFormFeild.dart';
-import '../logic/provider.dart';
+import '../registration/reg_provider.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
@@ -19,7 +20,7 @@ class LoginPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Form(
           key: formKey,
-          child: Consumer<UserProvider>(builder: (context, value1, child) {
+          child: Consumer<LoginProvider>(builder: (context, value1, child) {
             return Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,13 +30,13 @@ class LoginPage extends StatelessWidget {
                     width: width,
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage("assets/logoBg.png"))),
-                    child: Image.asset("assets/logo.png", scale: 3),
+                            image: AssetImage("assets/images/logoBg.png"))),
+                    child: Image.asset("assets/images/logo.png", scale: 3),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child:
-                        Consumer<UserProvider>(builder: (context, value1, child) {
+                        Consumer<LoginProvider>(builder: (context, value1, child) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -109,16 +110,12 @@ class LoginPage extends StatelessWidget {
                               ),
                               child: TextButton(
                                 onPressed: () async {
-                                  if (formKey.currentState!.validate()) {
+                                  // if (formKey.currentState!.validate()) {
                                     value1.login(context  );
                                     // value1.sendotp(context);
-                                  } else {
+                                  // } else {
                                     // await  value1.sendPushNotification();
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text("Error in Form")),
-                                    );
-                                  }
+                                  //  W
                                 },
                                 style: TextButton.styleFrom(
                                   foregroundColor: cWhite,

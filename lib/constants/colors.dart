@@ -147,3 +147,12 @@ TextStyle textformHeadStyleWhite = TextStyle(
     fontSize: 16,
     // height: 0.5,
     fontWeight: FontWeight.w400);
+
+TextStyle textformHeadStyleGreen = TextStyle(
+    fontFamily: 'Poppins',
+    color: maingreen,
+    fontSize: 16,
+    // height: 0.5,
+    fontWeight: FontWeight.w400);
+
+

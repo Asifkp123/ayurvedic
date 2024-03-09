@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:testayurvedicproject/logic/provider.dart';
+import 'package:testayurvedicproject/presentation/registration/reg_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:testayurvedicproject/presentation/registration/widget/add_treatment_alert.dart';
 import 'package:testayurvedicproject/widgets/radio_button.dart';
 
-import '../constants/colors.dart';
-import '../widgets/textFormFeild.dart';
+import '../../constants/colors.dart';
+import '../../widgets/textFormFeild.dart';
+import 'branches_model.dart';
 
 class PatientRegistrationScreen extends StatelessWidget {
   const PatientRegistrationScreen({super.key});
@@ -72,29 +74,265 @@ class PatientRegistrationScreen extends StatelessWidget {
                     SizedBox(
                       height: 8,
                     ),
-                    Text("AUTO COMPLETE" ,style: textformHeadStyle),
+                    Text("Location" ,style: textformHeadStyle),
                     SizedBox(height: 8,),
-                    Container(
-                      color: Colors.red,
-                      child: CustomTextFormField(
-                          inputController: value1.patientWTCT,
-                          label: "AUTO COMPLETE",
-                          error: "AUTO COMPLETE",
-                          type: TextInputType.name),
+
+                    Consumer<RegistrationProvider>(
+                        builder: (context,value,child) {
+                          return Autocomplete<String>(
+                            optionsBuilder: (TextEditingValue textEditingValue) {
+                              return (value.locations).where((String place) => place.toLowerCase()
+                                  .contains(textEditingValue.text.toLowerCase()))
+                                  .toList();
+                            },
+                            displayStringForOption: (String option) => option,
+                            fieldViewBuilder: (
+                                BuildContext context,
+                                TextEditingController fieldTextEditingController,
+                                FocusNode fieldFocusNode,
+                                VoidCallback onFieldSubmitted
+                                ) {
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+
+                                fieldTextEditingController.text=value.locationCT.text;
+                              });
+
+                              return SizedBox(
+
+                                child: TextFormField(
+
+
+                                  decoration: InputDecoration(
+                                    hintText: 'Choose your location',
+                                    hintStyle:TextStyle(color: Colors.grey,fontSize: 16),
+                                    border: InputBorder.none,
+
+                                    fillColor: mainColor,
+                                    filled: true,
+                                    suffixIcon: const Icon(
+                                      Icons.keyboard_arrow_down_sharp,
+                                      size: 20,
+                                      color: Colors.black38,
+                                    ),
+
+                                  ),
+
+                                  validator: (text){
+                                    if(text!.isEmpty&& !value.locations.contains(text)){
+                                      return 'Location';
+                                    }else{
+                                      return null;
+                                    }
+                                  },
+
+
+                                  onChanged: (value){
+                                  },
+                                  controller: fieldTextEditingController,
+                                  focusNode: fieldFocusNode,
+
+                                  style:  TextStyle(
+                                    color: clBlack.withOpacity(.30),
+                                    fontSize: 20,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              );
+                            },
+                            onSelected: (String selection) {
+                              value.locationCT.text=selection;
+                              FocusManager.instance.primaryFocus?.unfocus();
+
+                            },
+
+                            optionsViewBuilder: (
+                                BuildContext context,
+                                AutocompleteOnSelected<String> onSelected,
+                                Iterable<String> options
+                                ) {
+                              return Align(
+                                alignment: Alignment.topLeft,
+                                child: Material(
+                                  child: Card(
+                                    elevation: 3,
+                                    margin: const EdgeInsets.symmetric(horizontal: 5),
+                                    child: Container(
+                                      width: width/1.2,
+                                      height: 200,
+                                      color: Colors.white,
+                                      child: ListView.builder(
+                                        // padding: const EdgeInsets.all(10.0),
+                                        itemCount: options.length,
+                                        itemBuilder: (BuildContext context, int index) {
+                                          final String option = options.elementAt(index);
+
+                                          return GestureDetector(
+                                            onTap: () {
+                                              onSelected(option);
+                                              print(option+'kododoa');
+                                            },
+                                            child:  Container(
+                                              color: Colors.white,
+                                              height: 54,
+                                              width: width,
+                                              child: Column(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Text(option,
+                                                        style:    const TextStyle(
+                                                          color: clBlack,
+                                                          fontSize: 13,
+                                                          fontFamily: 'Poppins',
+                                                          fontWeight: FontWeight.w600,
+                                                        ),
+
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 10)
+                                                  ]),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        }
                     ),
+
                     SizedBox(
                       height: 8,
                     ),
-                    Text("AUTO COMPLETE" ,style: textformHeadStyle),
+                    Text("Branches" ,style: textformHeadStyle),
                     SizedBox(height: 8,),
-                    Container(
-                      color: Colors.red,
-                      child: CustomTextFormField(
-                          inputController: value1.patientWTCT,
-                          label: "AUTO COMPLETE",
-                          error: "AUTO COMPLETE",
-                          type: TextInputType.name),
+
+                    Consumer<RegistrationProvider>(
+                        builder: (context,value,child) {
+                          return Autocomplete<BranchModel>(
+                            optionsBuilder:
+                                (TextEditingValue textEditingValue) {
+                              // return (value55.allWards)
+                              return (value.branches)
+                                  .where((BranchModel branch) =>
+                              branch.name
+                                  .toLowerCase()
+                                  .contains(textEditingValue
+                                  .text
+                                  .toLowerCase()) ||
+                                  branch.name
+                                      .toLowerCase()
+                                      .contains(textEditingValue
+                                      .text
+                                      .toLowerCase()))
+                                  .toList();
+                            },
+                            displayStringForOption:
+                                (BranchModel option) => option.name,
+                            fieldViewBuilder: (BuildContext context,
+                                TextEditingController
+                                fieldTextEditingController,
+                                FocusNode fieldFocusNode,
+                                VoidCallback onFieldSubmitted) {
+                              WidgetsBinding.instance
+                                  .addPostFrameCallback((_) {
+                                fieldTextEditingController.text =
+                                    value.branchesCT.text;
+                              });
+                              return TextFormField(
+                                decoration: InputDecoration(
+
+                                  hintText: 'Select Branch',
+                                  hintStyle: TextStyle(color: Colors.grey),
+
+                                  suffixIcon: const Icon(
+                                    Icons.keyboard_arrow_down_sharp,
+                                    size: 20,
+                                    color: Colors.black38,
+                                  ),
+
+
+                                  filled: true,
+                                  fillColor: mainColor,
+
+                                  border:InputBorder.none
+
+                                ),
+                                validator: (name) => name == '' ||
+                                    !(value.branches)
+                                        .map((e) => e.name)
+                                        .contains(name)
+                                    ? 'Please Enter Valid Branch Name'
+                                    : null,
+                                controller: fieldTextEditingController,
+                                focusNode: fieldFocusNode,
+                                // style: const TextStyle(fontWeight: FontWeight.bold),
+                              );
+                            },
+                            onSelected: (BranchModel selection) {
+
+                              value.branchesCT.text=selection.name;
+                            },
+                            optionsViewBuilder: (BuildContext context,
+                                AutocompleteOnSelected<BranchModel>
+                                onSelected,
+                                Iterable<BranchModel> options) {
+                              return Align(
+                                alignment: Alignment.topLeft,
+                                child: Material(
+                                  child: Container(
+                                    // width: MediaQuery.of(context).size.width / 1.5,
+                                    height: 200,
+                                    color: Colors.white,
+                                    child: ListView.builder(
+                                      padding:
+                                      const EdgeInsets.all(10.0),
+                                      itemCount: options.length,
+                                      itemBuilder:
+                                          (BuildContext context,
+                                          int index) {
+                                        final BranchModel option =
+                                        options.elementAt(index);
+
+                                        return GestureDetector(
+                                          onTap: () {
+                                            onSelected(option);
+                                          },
+                                          child: Container(
+                                            // height: 60,
+                                            color: Colors.white,
+                                            child: Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment
+                                                    .start,
+                                                children: [
+                                                  Text(option.name,
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .bold)),
+
+                                                  const SizedBox(
+                                                      height: 10)
+                                                ]),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        }
                     ),
+
                     SizedBox(
                       height: 8,
                     ),
@@ -159,7 +397,8 @@ class PatientRegistrationScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(9),
                         ),
                         child: TextButton(
-                          onPressed: () async {
+                          onPressed: ()  {
+                            addCategoryAlert(context,);
           
                           },
                           style: TextButton.styleFrom(
@@ -235,19 +474,9 @@ class PatientRegistrationScreen extends StatelessWidget {
 
                     SizedBox(height: 10,)
 
-
-
-
-
                   ],
                 ),
               ),
-
-          
-          
-          
-          // const SizedBox(height: 10),
-          
             ],
           ),
         );
